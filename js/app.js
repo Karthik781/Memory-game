@@ -1,6 +1,15 @@
 /*
  * Create a list that holds all of your cards
  */
+const cardList = document.querySelectorAll('.card');
+
+let grid = [...cardList];
+
+//const deck = document.getElementbyClass(".card");
+
+let movesCount = document.querySelector('.moves');
+
+const starsList = document.querySelectorAll(".fa-star");
 
 
 /*
@@ -24,6 +33,90 @@ function shuffle(array) {
 
     return array;
 }
+
+document.body.onload = makeGameGrid();
+
+function makeGameGrid(){
+	grid = shuffle(grid);
+	 console.log(grid);
+
+	let tempArray= [];
+	tempArray.forEach.call(grid, function(item){
+   		 });
+    for (let i = 0; i < grid.length; i++) {
+        grid[i].classList.remove( 'open', 'show', 'match', 'unmatched', 'disabled');
+   	 }
+
+   	 for(let i = 0; i < starsList.length; i++){
+   	 	starsList[i].style.visibility = 'visible';
+   	 	starsList[i].style.color = '#f1f709';
+   	 }
+   }
+
+   // openCards();
+   let openedCards= [];
+   let openCard = function(){
+   		this.classList.toggle("open");
+   		this.classList.toggle("show");
+    	this.classList.toggle("disabled");
+
+    	openedCards.push(this);
+
+    	 let matchList=0;
+    	 let noOfCards = openedCards.length;
+    	 if(noOfCards === 2){
+    	 	movesCounter();
+    	 	 if(openedCards[0].firstElementChild.className === openedCards[1].firstElementChild.className){
+           		matched(openedCards);
+       			openedCards = [];   
+	 	 		}
+    	 		else {
+    	 			unMatched(openedCards);
+    	 		}
+   			}
+   		}
+
+   for(let i=0; i <grid.length; i++){
+   let cardStack= grid[i];
+    cardStack.addEventListener('click', openCard);
+	}
+
+	let moves=0;
+	function movesCounter(){
+		moves++;
+		movesCount.innerHTML = moves;
+		setStars(moves);
+	}
+
+	function setStars(moves){
+		if(moves > 10 && moves <20){
+			starsList[2].style.visibility='hidden';
+		}
+		else if(moves >= 20){
+			starsList[1].style.visibility='hidden';
+		}
+	}
+
+    function matched(cards){
+    	for (let i = 0; i < 2; i++){
+             cards[i].classList.add('match');
+             cards[i].classList.remove('show', 'open');
+        }
+	}
+
+    function unMatched(cards){
+    	for (let i = 0; i < 2; i++){
+             cards[i].classList.add('unmatched');
+       }
+       setTimeout(restoreCard, 500);
+    }
+
+    function restoreCard(cards){
+    for(let i = 0; i < 2; i++){
+            openedCards[i].classList.remove('open', 'show', 'unmatched', 'disabled');
+        }
+        openedCards = [];   
+    }
 
 
 /*
