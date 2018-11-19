@@ -61,7 +61,6 @@ function makeGameGrid(){
    	 matchCounter=0;
    	 movesCount.innerHTML = moves;
    	 openedCards= [];
-   	 let playerStars=3;
    }
 
 	// Shuffle function from http://stackoverflow.com/a/2450976
@@ -100,7 +99,7 @@ function makeGameGrid(){
 	    	 		}
 	   			}
 	   			//end game when all 8 cards are matched
-	   			 if(matchCounter===2){
+	   			 if(matchCounter===8){
     	 			endGame();
     	 		}
     }
@@ -157,7 +156,7 @@ function makeGameGrid(){
     function matched(cards){
     	matchCounter++;
     	for (let i = 0; i < 2; i++){
-             cards[i].classList.add('match');
+             cards[i].classList.add('match', 'disabled');
              cards[i].classList.remove('show', 'open');
         }
 	}
