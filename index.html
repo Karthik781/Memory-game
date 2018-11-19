@@ -25,8 +25,11 @@
         	<span class="moves">0</span> Moves
 
             <div class="restart">
-        		<i class="fa fa-repeat"></i>
+        		<button class="res" onclick="makeGameGrid()" value="button">restart</button>
         	</div>
+            <div class="timer">
+                <time>00:00:00</time>
+            </div>
         </section>
 
         <ul class="deck">
@@ -79,6 +82,18 @@
                 <i class="fa fa-cube"></i>
             </li>
         </ul>
+    </div>
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="popup">
+        <span class="close">&times;</span>
+        <h1>You Won! YAYYY!</h1>
+        <h3 class="pop-moves"></h3>
+        <h3 class="pop-time"></h3>
+        <h3 class="pop-stars"></h3>
+      </div>
+
     </div>
 
     <script src="js/app.js"></script>

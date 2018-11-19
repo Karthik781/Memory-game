@@ -11,13 +11,26 @@ let movesCount = document.querySelector('.moves');
 
 const starsList = document.querySelectorAll(".fa-star");
 
+let timer = document.getElementsByClassName('timer')[0];
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+let seconds = 0, minutes = 0, hours = 0, t;
+
+let matchCounter=0;
+
+let moves=0;
+
+
+// Get the <span> element that closes the modal
+let span = document.getElementsByClassName("close")[0];
+
+let modal = document.getElementById('myModal');
+
+const popMoves = document.getElementsByClassName('pop-moves');
+
+const popStars = document.getElementsByClassName('pop-stars');
+
+const popTime = document.getElementsByClassName('pop-time');
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -35,11 +48,9 @@ function shuffle(array) {
 }
 
 document.body.onload = makeGameGrid();
-
 function makeGameGrid(){
 	grid = shuffle(grid);
 	 console.log(grid);
-
 	let tempArray= [];
 	tempArray.forEach.call(grid, function(item){
    		 });
@@ -51,6 +62,14 @@ function makeGameGrid(){
    	 	starsList[i].style.visibility = 'visible';
    	 	starsList[i].style.color = '#f1f709';
    	 }
+
+   	 seconds= 0;
+   	 minutes=0;
+   	 hours=0;
+   	 moves=0;
+   	 matchCounter=0;
+   	 movesCount.innerHTML = moves;
+
    }
 
    // openCards();
@@ -59,29 +78,36 @@ function makeGameGrid(){
    		this.classList.toggle("open");
    		this.classList.toggle("show");
     	this.classList.toggle("disabled");
-
     	openedCards.push(this);
-
+    	timerStart();    	
     	 let matchList=0;
     	 let noOfCards = openedCards.length;
-    	 if(noOfCards === 2){
-    	 	movesCounter();
-    	 	 if(openedCards[0].firstElementChild.className === openedCards[1].firstElementChild.className){
-           		matched(openedCards);
-       			openedCards = [];   
-	 	 		}
-    	 		else {
-    	 			unMatched(openedCards);
-    	 		}
-   			}
-   		}
+    	 console.log(matchCounter);
+	    	 if(noOfCards === 2){
+	    	 	movesCounter();
+	    	 	 if(openedCards[0].firstElementChild.className === openedCards[1].firstElementChild.className){
+	           		matched(openedCards);
+	       			openedCards = [];   
+		 	 		}
+	    	 		else {
+	    	 			unMatched(openedCards);
+	    	 		}
+	   			}
+	   			 if(matchCounter===2){
+    	 			endGame();
+    	 			}
+    		}
 
    for(let i=0; i <grid.length; i++){
    let cardStack= grid[i];
     cardStack.addEventListener('click', openCard);
 	}
 
-	let moves=0;
+	function noop(){};
+	function timerStart(){
+		timerStart=noop;
+		setTimer();
+	}
 	function movesCounter(){
 		moves++;
 		movesCount.innerHTML = moves;
@@ -96,8 +122,29 @@ function makeGameGrid(){
 			starsList[1].style.visibility='hidden';
 		}
 	}
+	function add() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+            hours++;
+        }
+    }
+    
+    timer.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+    setTimer();
+	}
+
+	function setTimer() {
+    t = setTimeout(add, 1000);
+	}
+
 
     function matched(cards){
+    	matchCounter++;
     	for (let i = 0; i < 2; i++){
              cards[i].classList.add('match');
              cards[i].classList.remove('show', 'open');
@@ -109,6 +156,26 @@ function makeGameGrid(){
              cards[i].classList.add('unmatched');
        }
        setTimeout(restoreCard, 500);
+    }
+
+    function endGame(){
+		// When the user clicks the button, open the modal 
+	
+		    modal.style.display = "block";
+		    popMoves.innerHTML = moves;
+		    popTime.innerHTML = hours + minutes + seconds;
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+		    modal.style.display = "none";
+		    makeGameGrid();
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		    if (event.target === modal) {
+		        modal.style.display = "none";
+		    }
+		}
     }
 
     function restoreCard(cards){
