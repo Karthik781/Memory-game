@@ -1,40 +1,31 @@
-/*
- * Create a list that holds all of your cards
- */
+//node list of all cards
 const cardList = document.querySelectorAll('.card');
-
-let grid1 = [...cardList];
-
-	console.log(grid1);
-let grid =[];
-
+//store the nodelist into an array
+let grid = [...cardList];
+//store deck parent to append shuffle items
 const deck = document.getElementById("card-deck");
-
-//const deck = document.getElementbyClass(".card");
-
-let movesCount = document.querySelector('.moves');
-
+//store move element
+const movesCount = document.querySelector('.moves');
+//store stars element
 const starsList = document.querySelectorAll(".fa-star");
 
 let timer = document.getElementsByClassName('timer')[0];
-
+//timer variables
 let seconds = 0, minutes = 0, hours = 0, t;
-
+//variable to store matched cards
 let matchCounter=0;
-
+//variable to store no of total moves
 let moves=0;
 
 
 // Get the <span> element that closes the modal
-let span = document.getElementsByClassName("close")[0];
-
-let modal = document.getElementById('myModal');
-
-let popMoves = document.querySelector('.pop-moves');
-
-let popStars = document.querySelector('.pop-stars');
-
-let popTime = document.querySelector('.pop-time');
+const span = document.getElementsByClassName("close")[0];
+//get the modal
+const modal = document.getElementById('myModal');
+//get the pop element to show details
+const popMoves = document.querySelector('.pop-moves');
+const popStars = document.querySelector('.pop-stars');
+const popTime = document.querySelector('.pop-time');
 
 let starList = Array.from(document.querySelector('.stars'));
 
@@ -43,7 +34,7 @@ document.body.onload = makeGameGrid();
 // Shuffle function from http://stackoverflow.com/a/2450976
 
 function makeGameGrid(){
-	grid = shuffle(grid1);
+	grid = shuffle(grid);
 	console.log(grid);
 	let tempArray= [];
 	for (var i = 0; i < grid.length; i++) {
