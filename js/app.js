@@ -8,7 +8,8 @@ const deck = document.getElementById("card-deck");
 const movesCount = document.querySelector('.moves');
 //store stars element
 const starsList = document.querySelectorAll(".fa-star");
-
+// array for opened cards
+ let openedCards= [];
 let timer = document.getElementsByClassName('timer')[0];
 //timer variables
 let seconds = 0, minutes = 0, hours = 0, t;
@@ -45,7 +46,7 @@ function makeGameGrid(){
         [].forEach.call(grid, function (item) {
             deck.appendChild(item);
         });
-        grid[i].classList.remove("show", "open", "match");
+        grid[i].classList.remove("show", "open", "match", "disabled");
     } 
     //display all stars initially
    	 for(let i = 0; i < starsList.length; i++){
@@ -59,7 +60,8 @@ function makeGameGrid(){
    	 moves=0;
    	 matchCounter=0;
    	 movesCount.innerHTML = moves;
-
+   	 openedCards= [];
+   	 let playerStars=3;
    }
 
 	// Shuffle function from http://stackoverflow.com/a/2450976
@@ -78,9 +80,7 @@ function makeGameGrid(){
 	}
 
 
-   // array for opened cards
-   let openedCards= [];
-   		function openCard(){
+   	function openCard(){
    		this.classList.toggle("open");
    		this.classList.toggle("show");
     	this.classList.toggle("disabled");
@@ -100,7 +100,7 @@ function makeGameGrid(){
 	    	 		}
 	   			}
 	   			//end game when all 8 cards are matched
-	   			 if(matchCounter===8){
+	   			 if(matchCounter===2){
     	 			endGame();
     	 		}
     }
@@ -123,10 +123,10 @@ function makeGameGrid(){
 	}
 
 	function setStars(moves){
-		if(moves > 20 && moves <30){
+		if(moves > 30 && moves <45){
 			starsList[2].style.visibility='hidden';
 		}
-		else if(moves >= 30){
+		else if(moves >= 45){
 			starsList[1].style.visibility='hidden';
 		}
 	}
@@ -142,14 +142,15 @@ function makeGameGrid(){
         }
     }
     
-    timer.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+    timer.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + 
+    (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
 
     setTimer();
 	}
 
 	function setTimer() {
     t = setTimeout(add, 1000);
-        timer.innerHTML = hours + ' h ' + minutes + ' m ' + seconds + ' s ';
+        timer.innerHTML = `${hours} h ${minutes} m ${seconds} s `;
 	}
 
 	//enters when two cards are matched
