@@ -25,13 +25,14 @@ let span = document.getElementsByClassName("close")[0];
 
 let modal = document.getElementById('myModal');
 
-const popMoves = document.getElementsByClassName('pop-moves');
+let popMoves = document.querySelector('.pop-moves');
 
-const popStars = document.getElementsByClassName('pop-stars');
+let popStars = document.querySelector('.pop-stars');
 
-const popTime = document.getElementsByClassName('pop-time');
+let popTime = document.getElementsByClassName('pop-time');
 
-
+let starList = Array.from(document.querySelector('.stars'));
+console.log(starsList+"dfvd");
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -110,7 +111,7 @@ function makeGameGrid(){
 	}
 	function movesCounter(){
 		moves++;
-		movesCount.innerHTML = moves;
+		movesCount = moves;
 		setStars(moves);
 	}
 
@@ -140,6 +141,7 @@ function makeGameGrid(){
 
 	function setTimer() {
     t = setTimeout(add, 1000);
+        timer.innerHTML = hours + ' h ' + minutes + ' m ' + seconds + ' s ';
 	}
 
 
@@ -157,13 +159,11 @@ function makeGameGrid(){
        }
        setTimeout(restoreCard, 500);
     }
-
-    function endGame(){
-		// When the user clicks the button, open the modal 
-	
+    function endGame(){	
 		    modal.style.display = "block";
 		    popMoves.innerHTML = moves;
-		    popTime.innerHTML = hours + minutes + seconds;
+		    popStars.innerHTML = starsList.length;
+		   popTime.innerHTML = timer.innerHTML;
 		// When the user clicks on <span> (x), close the modal
 		span.onclick = function() {
 		    modal.style.display = "none";

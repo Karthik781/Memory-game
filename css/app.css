@@ -133,7 +133,8 @@ h1 {
 /* Modal Content */
 .popup {
     background-color: #fefefe;
-    margin: auto;
+    margin: auto;\
+    height: 300px;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
