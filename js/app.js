@@ -29,10 +29,12 @@ let popMoves = document.querySelector('.pop-moves');
 
 let popStars = document.querySelector('.pop-stars');
 
-let popTime = document.getElementsByClassName('pop-time');
+let popTime = document.querySelector('.pop-time');
 
 let starList = Array.from(document.querySelector('.stars'));
-console.log(starsList+"dfvd");
+
+document.body.onload = makeGameGrid();
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -48,10 +50,8 @@ function shuffle(array) {
     return array;
 }
 
-document.body.onload = makeGameGrid();
 function makeGameGrid(){
 	grid = shuffle(grid);
-	 console.log(grid);
 	let tempArray= [];
 	tempArray.forEach.call(grid, function(item){
    		 });
@@ -83,7 +83,6 @@ function makeGameGrid(){
     	timerStart();    	
     	 let matchList=0;
     	 let noOfCards = openedCards.length;
-    	 console.log(matchCounter);
 	    	 if(noOfCards === 2){
 	    	 	movesCounter();
 	    	 	 if(openedCards[0].firstElementChild.className === openedCards[1].firstElementChild.className){
@@ -96,8 +95,8 @@ function makeGameGrid(){
 	   			}
 	   			 if(matchCounter===2){
     	 			endGame();
-    	 			}
-    		}
+    	 		}
+    }
 
    for(let i=0; i <grid.length; i++){
    let cardStack= grid[i];
@@ -111,7 +110,8 @@ function makeGameGrid(){
 	}
 	function movesCounter(){
 		moves++;
-		movesCount = moves;
+		console.log(moves+"dfv");
+		movesCount.innerHTML = moves;
 		setStars(moves);
 	}
 
