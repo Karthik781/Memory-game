@@ -11,6 +11,6 @@ Each turn:
 
 The game ends once all cards have been correctly matched
 
-##To run locally
+## To run locally
 
 Download the zip folder or clone the repo and run index.html
