@@ -3,7 +3,12 @@
  */
 const cardList = document.querySelectorAll('.card');
 
-let grid = [...cardList];
+let grid1 = [...cardList];
+
+	console.log(grid1);
+let grid =[];
+
+const deck = document.getElementById("card-deck");
 
 //const deck = document.getElementbyClass(".card");
 
@@ -36,29 +41,18 @@ let starList = Array.from(document.querySelector('.stars'));
 document.body.onload = makeGameGrid();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-}
 
 function makeGameGrid(){
-	grid = shuffle(grid);
+	grid = shuffle(grid1);
+	console.log(grid);
 	let tempArray= [];
-	tempArray.forEach.call(grid, function(item){
-   		 });
-    for (let i = 0; i < grid.length; i++) {
-        grid[i].classList.remove( 'open', 'show', 'match', 'unmatched', 'disabled');
-   	 }
-
+	for (var i = 0; i < grid.length; i++) {
+        deck.innerHTML = "";
+        [].forEach.call(grid, function (item) {
+            deck.appendChild(item);
+        });
+        grid[i].classList.remove("show", "open", "match", "disabled");
+    }
    	 for(let i = 0; i < starsList.length; i++){
    	 	starsList[i].style.visibility = 'visible';
    	 	starsList[i].style.color = '#f1f709';
@@ -72,6 +66,24 @@ function makeGameGrid(){
    	 movesCount.innerHTML = moves;
 
    }
+
+   function shuffle(array) {
+   	    	console.log("123");
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+    	console.log(array);
+
+}
+
 
    // openCards();
    let openedCards= [];
@@ -110,7 +122,6 @@ function makeGameGrid(){
 	}
 	function movesCounter(){
 		moves++;
-		console.log(moves+"dfv");
 		movesCount.innerHTML = moves;
 		setStars(moves);
 	}
