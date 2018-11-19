@@ -26,8 +26,11 @@ const modal = document.getElementById('myModal');
 const popMoves = document.querySelector('.pop-moves');
 const popStars = document.querySelector('.pop-stars');
 const popTime = document.querySelector('.pop-time');
+const playAgainBtn = document.querySelector('.play-again');
 //get star elements into array
 let starList = Array.from(document.querySelector('.stars'));
+
+
 //load the game grid on loading the page
 document.body.onload = makeGameGrid();
 
@@ -173,6 +176,10 @@ function makeGameGrid(){
 		   popTime.innerHTML = timer.innerHTML;
 		// When the user clicks on <span> (x), close the popup
 		span.onclick = function() {
+		    modal.style.display = "none";
+		    makeGameGrid();
+		}
+		playAgainBtn.onclick = function() {
 		    modal.style.display = "none";
 		    makeGameGrid();
 		}
