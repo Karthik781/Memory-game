@@ -26,29 +26,30 @@ const modal = document.getElementById('myModal');
 const popMoves = document.querySelector('.pop-moves');
 const popStars = document.querySelector('.pop-stars');
 const popTime = document.querySelector('.pop-time');
-
+//get star elements into array
 let starList = Array.from(document.querySelector('.stars'));
-
+//load the game grid on loading the page
 document.body.onload = makeGameGrid();
 
-// Shuffle function from http://stackoverflow.com/a/2450976
 
 function makeGameGrid(){
+	//call shuffle function
 	grid = shuffle(grid);
-	console.log(grid);
 	let tempArray= [];
+	//append new shuffled items to the dock
 	for (var i = 0; i < grid.length; i++) {
         deck.innerHTML = "";
         [].forEach.call(grid, function (item) {
             deck.appendChild(item);
         });
-        grid[i].classList.remove("show", "open", "match", "disabled");
-    }
+        grid[i].classList.remove("show", "open", "match");
+    } 
+    //display all stars initially
    	 for(let i = 0; i < starsList.length; i++){
    	 	starsList[i].style.visibility = 'visible';
    	 	starsList[i].style.color = '#f1f709';
    	 }
-
+   	 //reset the variables
    	 seconds= 0;
    	 minutes=0;
    	 hours=0;
@@ -58,8 +59,8 @@ function makeGameGrid(){
 
    }
 
-   function shuffle(array) {
-   	    	console.log("123");
+	// Shuffle function from http://stackoverflow.com/a/2450976
+	function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
@@ -68,17 +69,15 @@ function makeGameGrid(){
         temporaryValue = array[currentIndex];
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
-    }
+    	}
 
     return array;
-    	console.log(array);
-
-}
+	}
 
 
-   // openCards();
+   // array for opened cards
    let openedCards= [];
-   let openCard = function(){
+   		function openCard(){
    		this.classList.toggle("open");
    		this.classList.toggle("show");
     	this.classList.toggle("disabled");
@@ -88,6 +87,7 @@ function makeGameGrid(){
     	 let noOfCards = openedCards.length;
 	    	 if(noOfCards === 2){
 	    	 	movesCounter();
+	    	 	//check cards for similarity
 	    	 	 if(openedCards[0].firstElementChild.className === openedCards[1].firstElementChild.className){
 	           		matched(openedCards);
 	       			openedCards = [];   
@@ -96,21 +96,23 @@ function makeGameGrid(){
 	    	 			unMatched(openedCards);
 	    	 		}
 	   			}
-	   			 if(matchCounter===2){
+	   			//end game when all 8 cards are matched
+	   			 if(matchCounter===8){
     	 			endGame();
     	 		}
     }
-
+    //listen to events for click 
    for(let i=0; i <grid.length; i++){
    let cardStack= grid[i];
     cardStack.addEventListener('click', openCard);
 	}
-
+	//nothing function to make another functon execute only once
 	function noop(){};
 	function timerStart(){
 		timerStart=noop;
 		setTimer();
 	}
+
 	function movesCounter(){
 		moves++;
 		movesCount.innerHTML = moves;
@@ -118,13 +120,14 @@ function makeGameGrid(){
 	}
 
 	function setStars(moves){
-		if(moves > 10 && moves <20){
+		if(moves > 20 && moves <30){
 			starsList[2].style.visibility='hidden';
 		}
-		else if(moves >= 20){
+		else if(moves >= 30){
 			starsList[1].style.visibility='hidden';
 		}
 	}
+	//implementation of timers
 	function add() {
     seconds++;
     if (seconds >= 60) {
@@ -146,7 +149,7 @@ function makeGameGrid(){
         timer.innerHTML = hours + ' h ' + minutes + ' m ' + seconds + ' s ';
 	}
 
-
+	//enters when two cards are matched
     function matched(cards){
     	matchCounter++;
     	for (let i = 0; i < 2; i++){
@@ -154,19 +157,21 @@ function makeGameGrid(){
              cards[i].classList.remove('show', 'open');
         }
 	}
-
+	//enter when two cards are unmatched
     function unMatched(cards){
     	for (let i = 0; i < 2; i++){
              cards[i].classList.add('unmatched');
        }
-       setTimeout(restoreCard, 500);
+       //restore the card and flip back after 300ms
+       setTimeout(restoreCard, 300);
     }
+    //when all cards are matched, open popup
     function endGame(){	
 		    modal.style.display = "block";
 		    popMoves.innerHTML = moves;
 		    popStars.innerHTML = starsList.length;
 		   popTime.innerHTML = timer.innerHTML;
-		// When the user clicks on <span> (x), close the modal
+		// When the user clicks on <span> (x), close the popup
 		span.onclick = function() {
 		    modal.style.display = "none";
 		    makeGameGrid();
@@ -186,15 +191,3 @@ function makeGameGrid(){
         }
         openedCards = [];   
     }
-
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
